@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Be My Valentine?</title>
+  <style>
+    :root{
+      /* ✅ CHANGE THESE */
+      --page-bg: #ffb3d9;          /* background color */
+      --yes-color: #ff2d86;        /* bright yes button */
+      --card-bg: #ffffff;          /* white module */
+      --text: #1a1a1a;
+      --muted: #8f8f8f;
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: var(--page-bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      overflow:hidden;
+    }
+
+    .card{
+      width:min(720px, 92vw);
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.18);
+      padding: 28px;
+      position: relative;
+    }
+
+    .top{
+      display:flex;
+      gap: 18px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    h1{
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle{
+      margin: 10px 0 0;
+      color: #4b4b4b;
+      font-size: 15px;
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 18px;
+      align-items:center;
+    }
+
+    @media (max-width: 640px){
+      .content{ grid-template-columns: 1fr; }
+    }
+
+    .buttons-area{
+      position: relative;
+      border-radius: 18px;
+      border: 1px dashed rgba(0,0,0,.15);
+      padding: 18px;
+      min-height: 190px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden; /* keeps No button inside the box */
+    }
+
+    .btn{
+      appearance:none;
+      border: none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 800;
+      font-size: 18px;
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active{ transform: scale(.98); }
+
+    #yesBtn{
+      background: var(--yes-color);
+      color: white;
+      box-shadow: 0 14px 28px rgba(255,45,134,.35);
+      position: relative;
+      z-index: 2;
+    }
+    #yesBtn:hover{ filter: brightness(1.05); }
+
+    #noBtn{
+      background: #ececec;
+      color: #4a4a4a;
+      padding: 10px 14px;   /* smaller */
+      font-size: 14px;      /* smaller */
+      font-weight: 700;
+      position: absolute;   /* so it can run */
+      left: 62%;
+      top: 58%;
+      z-index: 1;
+      box-shadow: 0 10px 20px rgba(0,0,0,.10);
+    }
+
+    .right{
+      display:grid;
+      gap: 10px;
+      justify-items:center;
+      text-align:center;
+    }
+
+    .girl-wrap{
+      width: min(240px, 70vw);
+      aspect-ratio: 1 / 1;
+      display:grid;
+      place-items:center;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,45,134,.08), rgba(0,0,0,0));
+      border: 1px solid rgba(0,0,0,.06);
+    }
+
+    .hint{
+      color: #555;
+      font-size: 14px;
+      margin:0;
+    }
+
+    .result{
+      margin-top: 16px;
+      display:none;
+      gap: 12px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,45,134,.08);
+      border: 1px solid rgba(255,45,134,.18);
+    }
+    .result.show{ display:flex; }
+
+    .gif{
+      width:min(320px, 88vw);
+      border-radius: 16px;
+      overflow:hidden;
+      box-shadow: 0 14px 34px rgba(0,0,0,.12);
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .gif img{ width:100%; height:auto; display:block; }
+
+    .tag{
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    .tiny{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="top">
+      <div>
+        <h1>Will You Be My Valentine?</h1>
+        <p class="subtitle">There is only one correct answer 😌</p>
+      </div>
+    </div>
+
+    <section class="content">
+      <div>
+        <div class="buttons-area" id="arena">
+          <button class="btn" id="yesBtn">Yes</button>
+          <button class="btn" id="noBtn" aria-label="No (good luck clicking this)">No</button>
+        </div>
+
+        <div class="result" id="result">
+          <div class="tag">YAY!!! 🤓💘</div>
+          <div class="gif">
+            <img id="hugGif" alt="Nerdy hug gif" />
+          </div>
+        </div>
+
+        <div class="tiny">
+          Tip: change <code>--page-bg</code> and <code>GIF_URLS</code> in the file to customize.
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="girl-wrap" aria-hidden="true">
+          <!-- Simple inline SVG "girl waiting" illustration -->
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M35 150c8-34 36-54 55-54s47 20 55 54" stroke="rgba(0,0,0,.18)" stroke-width="10" stroke-linecap="round"/>
+            <circle cx="90" cy="74" r="34" fill="#FFD6E7" stroke="rgba(0,0,0,.2)" stroke-width="6"/>
+            <path d="M56 70c6-22 25-34 34-34s28 12 34 34" fill="#3A2B2B"/>
+            <path d="M54 74c2-26 23-46 36-46s34 20 36 46c-6-9-18-18-36-18s-30 9-36 18Z" fill="#3A2B2B"/>
+            <circle cx="76" cy="78" r="4.5" fill="#2B1B1B"/>
+            <circle cx="104" cy="78" r="4.5" fill="#2B1B1B"/>
+            <path d="M77 95c7 8 19 8 26 0" stroke="#C14B6E" stroke-width="6" stroke-linecap="round"/>
+            <path d="M63 108c6 8 12 14 27 14s21-6 27-14" fill="#FFEAF2" stroke="rgba(0,0,0,.15)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M52 118c8 3 16 6 22 6" stroke="rgba(0,0,0,.15)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M128 118c-8 3-16 6-22 6" stroke="rgba(0,0,0,.15)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M90 132c10 0 18-4 24-10" stroke="#ff2d86" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="hint">She’s waiting for you to click <strong>Yes</strong>…</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ✅ Put your favorite nerdy hug GIF links here (or upload your own gif and use a relative path)
+    const GIF_URLS = [
+      // If you want a local file instead: "hug.gif"
+      // Example placeholders — replace with any direct .gif URL you like:
+      "https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif",
+      "https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif",
+      "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+    ];
+
+    const arena = document.getElementById("arena");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const result = document.getElementById("result");
+    const hugGif = document.getElementById("hugGif");
+
+    function rand(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function moveNoButton(){
+      // Keep the No button inside the arena with some padding
+      const pad = 14;
+      const a = arena.getBoundingClientRect();
+      const b = noBtn.getBoundingClientRect();
+
+      const maxX = a.width - b.width - pad;
+      const maxY = a.height - b.height - pad;
+
+      const x = Math.max(pad, Math.floor(Math.random() * maxX));
+      const y = Math.max(pad, Math.floor(Math.random() * maxY));
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // Make "No" run away on hover, focus, and touch
+    ["mouseenter","pointerenter","touchstart","focus"].forEach(evt=>{
+      noBtn.addEventListener(evt, (e) => {
+        e.preventDefault();
+        moveNoButton();
+      }, { passive:false });
+    });
+
+    // Also dodge if user tries to click it
+    noBtn.addEventListener("pointerdown", (e)=>{
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    // On load, slightly randomize starting position
+    window.addEventListener("load", () => moveNoButton());
+
+    yesBtn.addEventListener("click", ()=>{
+      hugGif.src = rand(GIF_URLS);
+      result.classList.add("show");
+
+      // Optional: disable buttons after yes
+      noBtn.disabled = true;
+      yesBtn.disabled = true;
+      yesBtn.textContent = "YES 💘";
+    });
+
+    // Bonus: Pressing "N" also makes No run away (fun)
+    document.addEventListener("keydown", (e)=>{
+      if (e.key.toLowerCase() === "n") moveNoButton();
+    });
+  </script>
+</body>
+</html>
