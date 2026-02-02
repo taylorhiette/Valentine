@@ -4,93 +4,92 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Be My Valentine?</title>
+
   <style>
-
-
-    .top.centered{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 14px;
-}
-
-.top.centered .girl-wrap{
-  margin-bottom: 6px;
-}
     :root{
-      /* ✅ CHANGE THESE */
-      --page-bg: #ffb3d9;          /* background color */
-      --yes-color: #ff2d86;        /* bright yes button */
-      --card-bg: #ffffff;          /* white module */
+      /* ✅ Customize these */
+      --page-bg: #ffb3d9;     /* background color */
+      --card-bg: #ffffff;     /* white module */
+      --yes-color: #ff2d86;   /* bright yes button */
       --text: #1a1a1a;
-      --muted: #8f8f8f;
+      --muted: #6a6a6a;
     }
 
     * { box-sizing: border-box; }
+
     body{
       margin:0;
       min-height:100vh;
       display:grid;
       place-items:center;
       background: var(--page-bg);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color: var(--text);
       overflow:hidden;
     }
 
     .card{
-      width:min(720px, 92vw);
+      width:min(760px, 92vw);
       background: var(--card-bg);
       border-radius: 28px;
       box-shadow: 0 18px 60px rgba(0,0,0,.18);
       padding: 28px;
-      position: relative;
     }
 
-    .top{
+    /* Header stacked + centered */
+    .header{
       display:flex;
-      gap: 18px;
+      flex-direction:column;
       align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
+      text-align:center;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
     h1{
-      font-size: clamp(28px, 4vw, 44px);
+      font-size: clamp(28px, 4vw, 46px);
       line-height: 1.05;
       margin: 0;
       letter-spacing: -0.02em;
     }
 
     .subtitle{
-      margin: 10px 0 0;
+      margin: 0;
       color: #4b4b4b;
       font-size: 15px;
     }
 
-    .content{
+    /* The top image box */
+    .hero{
+      width: min(260px, 70vw);
+      aspect-ratio: 1 / 1;
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 18px;
-      margin-top: 18px;
-      align-items:center;
+      place-items:center;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,45,134,.10), rgba(0,0,0,0));
+      border: 1px solid rgba(0,0,0,.06);
+      overflow:hidden;
     }
 
-    @media (max-width: 640px){
-      .content{ grid-template-columns: 1fr; }
+    /* If you use an actual image */
+    .hero img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* change to 'contain' if you want full image without cropping */
+      display:block;
     }
 
+    /* Buttons area */
     .buttons-area{
       position: relative;
       border-radius: 18px;
       border: 1px dashed rgba(0,0,0,.15);
       padding: 18px;
-      min-height: 190px;
+      min-height: 220px;
       display:flex;
       align-items:center;
       justify-content:center;
-      overflow:hidden; /* keeps No button inside the box */
+      overflow:hidden; /* keeps No button inside */
     }
 
     .btn{
@@ -98,8 +97,8 @@
       border: none;
       cursor:pointer;
       border-radius: 999px;
-      padding: 14px 22px;
-      font-weight: 800;
+      padding: 14px 24px;
+      font-weight: 900;
       font-size: 18px;
       transition: transform .12s ease, filter .12s ease;
       user-select:none;
@@ -121,35 +120,12 @@
       color: #4a4a4a;
       padding: 10px 14px;   /* smaller */
       font-size: 14px;      /* smaller */
-      font-weight: 700;
+      font-weight: 800;
       position: absolute;   /* so it can run */
       left: 62%;
       top: 58%;
       z-index: 1;
       box-shadow: 0 10px 20px rgba(0,0,0,.10);
-    }
-
-    .right{
-      display:grid;
-      gap: 10px;
-      justify-items:center;
-      text-align:center;
-    }
-
-    .girl-wrap{
-      width: min(240px, 70vw);
-      aspect-ratio: 1 / 1;
-      display:grid;
-      place-items:center;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,45,134,.08), rgba(0,0,0,0));
-      border: 1px solid rgba(0,0,0,.06);
-    }
-
-    .hint{
-      color: #555;
-      font-size: 14px;
-      margin:0;
     }
 
     .result{
@@ -166,8 +142,13 @@
     }
     .result.show{ display:flex; }
 
+    .tag{
+      font-weight: 950;
+      letter-spacing: .02em;
+    }
+
     .gif{
-      width:min(320px, 88vw);
+      width:min(360px, 88vw);
       border-radius: 16px;
       overflow:hidden;
       box-shadow: 0 14px 34px rgba(0,0,0,.12);
@@ -175,77 +156,66 @@
     }
     .gif img{ width:100%; height:auto; display:block; }
 
-    .tag{
-      font-weight: 900;
-      letter-spacing: .02em;
-    }
-
     .tiny{
       font-size: 12px;
       color: var(--muted);
       margin-top: 10px;
+      text-align:center;
     }
+
+    code{ background: rgba(0,0,0,.05); padding: 2px 6px; border-radius: 8px; }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <div class="top centered">
-  <div class="girl-wrap" aria-hidden="true">
-    <!-- girl SVG stays EXACTLY the same -->
-    <!-- do not change the SVG -->
-  </div>
 
-  <h1>Will You Be My Valentine?</h1>
-  <p class="subtitle">There is only one correct answer ;)</p>
-</div>
+    <!-- ✅ TOP CENTER IMAGE + TITLE ABOVE EVERYTHING -->
+    <header class="header">
+      <h1>Will You Be My Valentine?</h1>
 
-    <section class="content">
-      <div>
-        <div class="buttons-area" id="arena">
-          <button class="btn" id="yesBtn">Yes</button>
-          <button class="btn" id="noBtn" aria-label="No (good luck clicking this)">No</button>
-        </div>
+      <div class="hero" aria-hidden="true">
+        <!-- ✅ OPTION A: Use your own image (recommended)
+             1) Upload a file into your repo (ex: "girl.png")
+             2) Set HERO_IMAGE_SRC below to "girl.png"
+        -->
+        <img id="heroImg" alt="Valentine character" />
 
-        <div class="result" id="result">
-          <div class="tag">YAY!!!🤓💘</div>
-          <div class="gif">
-            <img id="hugGif" alt="Nerdy hug gif" />
-          </div>
-        </div>
+        <!-- ✅ OPTION B (fallback): if no image is set, we insert an SVG with JS -->
+      </div>
 
-        <div class="tiny">
-          Tip: change <code>--page-bg</code> and <code>GIF_URLS</code> in the file to customize.
+      <p class="subtitle">There is only one correct answer 😌</p>
+    </header>
+
+    <!-- ✅ BUTTONS STILL A THING -->
+    <section>
+      <div class="buttons-area" id="arena">
+        <button class="btn" id="yesBtn">Yes</button>
+        <button class="btn" id="noBtn" aria-label="No (good luck clicking this)">No</button>
+      </div>
+
+      <div class="result" id="result">
+        <div class="tag">YAY!!! 🤓💘</div>
+        <div class="gif">
+          <img id="hugGif" alt="Nerdy hug gif" />
         </div>
       </div>
 
-      <div class="right">
-        <div class="girl-wrap" aria-hidden="true">
-          <!-- Simple inline SVG "girl waiting" illustration -->
-          <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M35 150c8-34 36-54 55-54s47 20 55 54" stroke="rgba(0,0,0,.18)" stroke-width="10" stroke-linecap="round"/>
-            <circle cx="90" cy="74" r="34" fill="#FFD6E7" stroke="rgba(0,0,0,.2)" stroke-width="6"/>
-            <path d="M56 70c6-22 25-34 34-34s28 12 34 34" fill="#3A2B2B"/>
-            <path d="M54 74c2-26 23-46 36-46s34 20 36 46c-6-9-18-18-36-18s-30 9-36 18Z" fill="#3A2B2B"/>
-            <circle cx="76" cy="78" r="4.5" fill="#2B1B1B"/>
-            <circle cx="104" cy="78" r="4.5" fill="#2B1B1B"/>
-            <path d="M77 95c7 8 19 8 26 0" stroke="#C14B6E" stroke-width="6" stroke-linecap="round"/>
-            <path d="M63 108c6 8 12 14 27 14s21-6 27-14" fill="#FFEAF2" stroke="rgba(0,0,0,.15)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M52 118c8 3 16 6 22 6" stroke="rgba(0,0,0,.15)" stroke-width="6" stroke-linecap="round"/>
-            <path d="M128 118c-8 3-16 6-22 6" stroke="rgba(0,0,0,.15)" stroke-width="6" stroke-linecap="round"/>
-            <path d="M90 132c10 0 18-4 24-10" stroke="#ff2d86" stroke-width="6" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <p class="hint">She’s waiting for you to click <strong>Yes</strong>…</p>
+      <div class="tiny">
+        To replace the person: upload an image into the repo and set <code>HERO_IMAGE_SRC</code>.
       </div>
     </section>
   </main>
 
   <script>
-    // ✅ Put your favorite nerdy hug GIF links here (or upload your own gif and use a relative path)
+    // ✅ Replace the person image here:
+    // - If you uploaded "girl.png" to the repo, use: "girl.png"
+    // - Or use a full image URL
+    // - Leave "" to use the built-in SVG fallback
+    const HERO_IMAGE_SRC = "";
+
+    // ✅ Nerdy hug GIFs (replace with your favorites, or upload your own "hug.gif")
     const GIF_URLS = [
-      // If you want a local file instead: "hug.gif"
-      // Example placeholders — replace with any direct .gif URL you like:
       "https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif",
       "https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif",
       "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
@@ -256,11 +226,46 @@
     const yesBtn = document.getElementById("yesBtn");
     const result = document.getElementById("result");
     const hugGif = document.getElementById("hugGif");
+    const heroImg = document.getElementById("heroImg");
 
     function rand(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
 
+    // HERO IMAGE: Use user image if set, otherwise fallback to SVG
+    function setHero(){
+      if (HERO_IMAGE_SRC && HERO_IMAGE_SRC.trim().length > 0){
+        heroImg.src = HERO_IMAGE_SRC.trim();
+        heroImg.style.display = "block";
+        return;
+      }
+
+      // fallback: inline SVG “girl waiting”
+      heroImg.style.display = "none";
+      const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+      svg.setAttribute("viewBox","0 0 180 180");
+      svg.setAttribute("width","180");
+      svg.setAttribute("height","180");
+
+      svg.innerHTML = `
+        <path d="M35 150c8-34 36-54 55-54s47 20 55 54" stroke="rgba(0,0,0,.18)" stroke-width="10" stroke-linecap="round"/>
+        <circle cx="90" cy="74" r="34" fill="#FFD6E7" stroke="rgba(0,0,0,.2)" stroke-width="6"/>
+        <path d="M56 70c6-22 25-34 34-34s28 12 34 34" fill="#3A2B2B"/>
+        <path d="M54 74c2-26 23-46 36-46s34 20 36 46c-6-9-18-18-36-18s-30 9-36 18Z" fill="#3A2B2B"/>
+        <circle cx="76" cy="78" r="4.5" fill="#2B1B1B"/>
+        <circle cx="104" cy="78" r="4.5" fill="#2B1B1B"/>
+        <path d="M77 95c7 8 19 8 26 0" stroke="#C14B6E" stroke-width="6" stroke-linecap="round"/>
+        <path d="M63 108c6 8 12 14 27 14s21-6 27-14" fill="#FFEAF2" stroke="rgba(0,0,0,.15)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M52 118c8 3 16 6 22 6" stroke="rgba(0,0,0,.15)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M128 118c-8 3-16 6-22 6" stroke="rgba(0,0,0,.15)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M90 132c10 0 18-4 24-10" stroke="#ff2d86" stroke-width="6" stroke-linecap="round"/>
+      `;
+      // Put SVG into the .hero box
+      const hero = document.querySelector(".hero");
+      // remove previous svg if any
+      hero.querySelectorAll("svg").forEach(s => s.remove());
+      hero.appendChild(svg);
+    }
+
     function moveNoButton(){
-      // Keep the No button inside the arena with some padding
       const pad = 14;
       const a = arena.getBoundingClientRect();
       const b = noBtn.getBoundingClientRect();
@@ -289,22 +294,17 @@
       moveNoButton();
     });
 
-    // On load, slightly randomize starting position
-    window.addEventListener("load", () => moveNoButton());
-
     yesBtn.addEventListener("click", ()=>{
       hugGif.src = rand(GIF_URLS);
       result.classList.add("show");
-
-      // Optional: disable buttons after yes
       noBtn.disabled = true;
       yesBtn.disabled = true;
       yesBtn.textContent = "YES 💘";
     });
 
-    // Bonus: Pressing "N" also makes No run away (fun)
-    document.addEventListener("keydown", (e)=>{
-      if (e.key.toLowerCase() === "n") moveNoButton();
+    window.addEventListener("load", ()=>{
+      setHero();
+      moveNoButton();
     });
   </script>
 </body>
