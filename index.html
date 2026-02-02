@@ -92,17 +92,6 @@
       overflow:hidden; /* keeps No button inside */
     }
 
-.button-row{
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-}
-
-
-    
     .btn{
       appearance:none;
       border: none;
@@ -126,15 +115,17 @@
     }
     #yesBtn:hover{ filter: brightness(1.05); }
 
- #noBtn{
-  background: #ececec;
-  color: #4a4a4a;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-weight: 800;
-  box-shadow: 0 10px 20px rgba(0,0,0,.10);
-}
-
+    #noBtn{
+      background: #ececec;
+      color: #4a4a4a;
+      padding: 10px 14px;   /* smaller */
+      font-size: 14px;      /* smaller */
+      font-weight: 800;
+      position: absolute;   /* so it can run */
+      left: 62%;
+      top: 58%;
+      z-index: 1;
+      box-shadow: 0 10px 20px rgba(0,0,0,.10);
     }
 
     .result{
@@ -183,15 +174,20 @@
     <header class="header">
       <h1>Will You Be My Valentine?</h1>
 
-     
+      <div class="hero" aria-hidden="true">
+        <!-- ✅ OPTION A: Use your own image (recommended)
+             1) Upload a file into your repo (ex: "girl.png")
+             2) Set HERO_IMAGE_SRC below to "girl.png"
+        -->
+      
     </header>
 
     <!-- ✅ BUTTONS STILL A THING -->
     <section>
-   <div class="button-row" id="buttonRow">
-  <button class="btn" id="yesBtn">Yes</button>
-  <button class="btn" id="noBtn">No</button>
-</div>
+      <div class="buttons-area" id="arena">
+        <button class="btn" id="yesBtn">Yes</button>
+        <button class="btn" id="noBtn" aria-label="No (good luck clicking this)">No</button>
+      </div>
 
       <div class="result" id="result">
         <div class="tag">YAY!!! 🤓💘</div>
@@ -264,32 +260,20 @@
       hero.appendChild(svg);
     }
 
-    let noEscaped = false;
+    function moveNoButton(){
+      const pad = 14;
+      const a = arena.getBoundingClientRect();
+      const b = noBtn.getBoundingClientRect();
 
-function moveNoButton(){
-  if (!noEscaped){
-    // First escape: pull it out of the row
-    noBtn.style.position = "absolute";
-    noBtn.style.left = "50%";
-    noBtn.style.top = "60%";
-    noBtn.style.transform = "translate(-50%, -50%)";
-    noEscaped = true;
-  }
+      const maxX = a.width - b.width - pad;
+      const maxY = a.height - b.height - pad;
 
-  const pad = 14;
-  const arenaRect = arena.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
+      const x = Math.max(pad, Math.floor(Math.random() * maxX));
+      const y = Math.max(pad, Math.floor(Math.random() * maxY));
 
-  const maxX = arenaRect.width - btnRect.width - pad;
-  const maxY = arenaRect.height - btnRect.height - pad;
-
-  const x = Math.max(pad, Math.floor(Math.random() * maxX));
-  const y = Math.max(pad, Math.floor(Math.random() * maxY));
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-}
-
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
 
     // Make "No" run away on hover, focus, and touch
     ["mouseenter","pointerenter","touchstart","focus"].forEach(evt=>{
